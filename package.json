@@ -4,7 +4,13 @@
   "description": "Tinder but for fighting strangers",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'fightapp/*'\" \"npm run fightapp\"",
+    "fightapp": "cd fightapp && npm run start",
+    "install": "cd fightapp && npm install",
+    "build": "cd fightapp && npm run build",
+    "heroku-postbuild": "npm run build"
   },
   "author": "JK",
   "browserslist": {
@@ -20,6 +26,7 @@
   },
   "dependencies": {
     "axios": "^0.18.1",
+    "concurrently": "^5.3.0",
     "express": "^4.17.1",
     "if-env": "^1.0.4",
     "lsof": "^0.1.0",
