@@ -9,13 +9,11 @@ const URI = process.env.MONGODB_URI || "mongodb://localhost/fighters";
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-
-app.use(express.static("build"))
+app.use(express.static(path.join(__dirname, "build")))
 app.use(routes);
-
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'))
+});
 mongoose.connect(URI, {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true})
 
 app.listen(PORT, function() {
